@@ -1,0 +1,62 @@
+﻿@model Order
+
+<h1>Order Details</h1>
+
+<div>
+    <h2>Order ID: @Model.Id</h2>
+    <p>User: @Model.User.UserName</p>
+    <p>Order Date: @Model.OrderDate.ToString("g")</p>
+    <p>Is Completed: @(Model.IsCompleted ? "Yes" : "No")</p>
+</div>
+
+<h3>Order Items</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Dish</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OrderItems)
+        {
+            <tr>
+                <td>@item.Dish.Name</td>
+                <td>
+                    <form action="@Url.Action("UpdateQuantity", "Order", new { orderItemId = item.Id })" method="post">
+                        <input type="number" name="quantity" min="1" value="@item.Quantity" />
+                        <button type="submit">Update</button>
+                    </form>
+                </td>
+                <td>@item.Price.ToString("C")</td>
+                <td>@(item.Quantity * item.Price).ToString("C")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (User.IsInRole("admin"))
+{
+    <form action="@Url.Action("CompleteOrder", "Order", new { id = Model.Id })" method="post">
+        <button type="submit" class="completed">Complete Order</button>
+    </form>
+}
+else
+{
+    <form action="@Url.Action("SendOrderForProcessing", "Order", new { id = Model.Id })" method="post">
+        <button type="submit" class="not-completed">Send Order for Processing</button>
+    </form>
+}
+<style>
+    .completed {
+        background-color: green;
+        color: white;
+    }
+
+    .not-completed {
+        background-color: red;
+        color: white;
+    }
+</style>

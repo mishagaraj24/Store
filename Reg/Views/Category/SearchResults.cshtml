@@ -1,0 +1,51 @@
+﻿@model Store.ViewModels.SearchViewModel
+@{
+    ViewData["Title"] = "Search Results";
+}
+
+<h1>Search Results</h1>
+
+@if (Model.Dishes.Any())
+{
+    <h2>Dishes</h2>
+    <div class="row">
+        @foreach (var dish in Model.Dishes)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="@dish.ImagePath" class="card-img-top" alt="@dish.Name" style="max-width: 100%; height: auto;" />
+                    <div class="card-body">
+                        <h5 class="card-title"><a asp-action="Details" asp-controller="Dish" asp-route-id="@dish.Id">@dish.Name</a></h5>
+                        <p class="card-text">@dish.Description</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>No dishes found.</p>
+}
+
+@if (Model.Categories.Any())
+{
+    <h2>Categories</h2>
+    <div class="row">
+        @foreach (var category in Model.Categories)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="@category.ImagePath" class="card-img-top" alt="@category.Name" style="max-width: 100%; height: auto;" />
+                    <div class="card-body">
+                        <h5 class="card-title"><a asp-action="Details" asp-controller="Category" asp-route-id="@category.Id">@category.Name</a></h5>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>No categories found.</p>
+}

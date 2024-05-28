@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Store.ViewModels.DishViewModel>
+
+<h1>Dishes</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Weight</th>
+            <th>Description</th>
+            <th>Image</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var dish in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => dish.Name)</td>
+                <td>@Html.DisplayFor(modelItem => dish.Weight)</td>
+                <td>@Html.DisplayFor(modelItem => dish.Description)</td>
+                <!-- Отображение изображения -->
+                <td>
+                    @if (!string.IsNullOrEmpty(dish.ImagePath))
+                    {
+                        <img src="@dish.ImagePath" alt="Dish Image" style="max-width: 100px;" />
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@dish.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@dish.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@dish.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

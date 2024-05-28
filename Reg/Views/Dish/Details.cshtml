@@ -1,0 +1,66 @@
+﻿@model Store.ViewModels.DishDetailsViewModel
+
+@{
+    ViewData["Title"] = "Dish Details";
+}
+
+<div class="container">
+    <h1>@Model.Name</h1>
+    @if (!string.IsNullOrEmpty(Model.ImagePath))
+    {
+        <img src="@Model.ImagePath" class="img-fluid" alt="@Model.Name" />
+    }
+    else
+    {
+        <p>No image available</p>
+    }
+
+    <div class="mt-4">
+        @if (!string.IsNullOrEmpty(Model.Description))
+        {
+            <p>@Model.Description</p>
+        }
+        else
+        {
+            <p>No description available</p>
+        }
+
+        @if (Model.Weight.HasValue)
+        {
+            <p>Weight: @Model.Weight</p>
+        }
+        else
+        {
+            <p>No weight available</p>
+        }
+    </div>
+    <form asp-controller="Order" asp-action="AddToOrder" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <label asp-for="@Model.Name"></label>
+        <label asp-for="@Model.Weight"></label>
+        <label asp-for="@Model.Description"></label>
+        <input asp-for="@Model.Quantity" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Add to Order</button>
+</form>
+    <div class="mt-4">
+        <form asp-controller="Order" asp-action="AddToOrder" method="get">
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="@Model.Name"></label>
+                <label asp-for="@Model.Weight"></label>
+                <label asp-for="@Model.Description"></label>
+                <input asp-for="@Model.Quantity" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-primary">Add to Order</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    .card {
+        margin: 0 auto; 
+        max-width: 200px;
+    }
+</style>

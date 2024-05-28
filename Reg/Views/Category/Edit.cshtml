@@ -1,0 +1,20 @@
+﻿@model Store.ViewModels.CategoryViewModel
+
+<form asp-action="Edit" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        @if (!string.IsNullOrEmpty(Model.ImagePath))
+        {
+            <label>Current Image:</label>
+            <img src="@Model.ImagePath" alt="Current Image" style="max-width: 200px; max-height: 200px;" />
+        }
+        <label asp-for="ImageFile"></label>
+        <input type="file" name="imageFile" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+</form>

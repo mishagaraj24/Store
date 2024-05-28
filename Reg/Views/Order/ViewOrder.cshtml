@@ -1,0 +1,47 @@
+﻿@model Store.ViewModels.OrderViewModel
+
+<div class="container">
+    <h2>Your Order</h2>
+    @if (Model.OrderItems.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Dish</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.OrderItems)
+                {
+                    <tr>
+                        <td>@item.Dish.Name</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Dish.Price</td>
+                        <td>@(item.Quantity * item.Dish.Price)</td>
+                        <td>
+                            <a class="btn btn-primary" href="@Url.Action("IncreaseQuantity", "Order", new { id = item.Id })">+</a>
+                            <a class="btn btn-warning" href="@Url.Action("DecreaseQuantity", "Order", new { id = item.Id })">-</a>
+                            <a class="btn btn-danger" href="@Url.Action("RemoveItem", "Order", new { id = item.Id })">Remove</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Total: @Model.TotalPrice</h4>
+            </div>
+            <div class="col-md-6 text-right">
+                <a class="btn btn-success" href="@Url.Action("Checkout", "Order")">Checkout</a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <p>Your order is empty.</p>
+    }
+</div>

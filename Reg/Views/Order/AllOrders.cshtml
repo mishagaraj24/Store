@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Order>
+
+<h1>All Orders</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>User</th>
+            <th>Order Date</th>
+            <th>Is Completed</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model)
+        {
+            <tr>
+                <td>@order.Id</td>
+                <td>@order.User.UserName</td>
+                <td>@order.OrderDate.ToString("g")</td>
+                <td>
+                    <form asp-controller="Order" asp-action="ToggleCompletion" method="post">
+                        <input type="hidden" name="orderId" value="@order.Id" />
+                        <input type="hidden" name="isCompleted" value="false" />
+                        <input type="checkbox" name="isCompleted" value="true" @(order.IsCompleted ? "checked" : "") />
+                        <button type="submit">Submit</button>
+                    </form>
+                </td>
+                <td>
+                    <a href="@Url.Action("Details", new { id = order.Id })">Details</a>
+                    <form asp-controller="Order" asp-action="Delete" method="post" style="display:inline;">
+                        <input type="hidden" name="orderId" value="@order.Id" />
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

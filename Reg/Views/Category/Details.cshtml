@@ -1,0 +1,40 @@
+﻿@model Store.ViewModels.CategoryDetailsViewModel
+<div class="container text-center">
+    <h1>@Model.CategoryName</h1>
+
+    <div class="row">
+        @if (Model.Dishes.Any())
+        {
+            @foreach (var dish in Model.Dishes)
+            {
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        @if (!string.IsNullOrEmpty(dish.ImagePath))
+                        {
+                            <img src="@dish.ImagePath" class="card-img-top" alt="@dish.Name" style="max-width: 100%; height: auto;" />
+                        }
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="@Url.Action("Details", "Dish", new { id = dish.Id })">@dish.Name</a></h5>
+                            <div class="btn-group" role="group">
+                                <a class="btn btn-primary" href="@Url.Action("Edit", "Dish", new { id = dish.Id })">Edit</a>
+                                <a class="btn btn-danger" href="@Url.Action("Delete", "Dish", new { id = dish.Id })">Delete</a>
+                            </div>
+                            <!-- Кнопка для добавления в заказ -->
+                            <a class="btn btn-success mt-2" href="@Url.Action("AddToOrder", "Order", new { dishId = dish.Id })">Добавить в заказ</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-md-12">
+                <p>@Model.NoDishesMessage</p>
+                @if (Model.ShowCreateDishButton)
+                {
+                    <a href="@Url.Action("Create", "Dish")" class="btn btn-primary">Create New Dish</a>
+                }
+            </div>
+        }
+    </div>
+</div>

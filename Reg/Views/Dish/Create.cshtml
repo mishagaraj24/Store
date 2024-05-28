@@ -1,0 +1,31 @@
+﻿@model Store.ViewModels.DishCreateViewModel
+
+<form asp-action="Create" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="Dish.Name"></label>
+        <input asp-for="Dish.Name" class="form-control" />
+        <span asp-validation-for="Dish.Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Dish.Weight"></label>
+        <input asp-for="Dish.Weight" class="form-control" />
+        <span asp-validation-for="Dish.Weight" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Dish.Description"></label>
+        <textarea asp-for="Dish.Description" class="form-control"></textarea>
+        <span asp-validation-for="Dish.Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Dish.CategoryId"></label>
+        <select asp-for="Dish.CategoryId" class="form-control" asp-items="Model.Categories">
+            <option value="">Select Category</option>
+        </select>
+        <span asp-validation-for="Dish.CategoryId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Dish.ImageFile"></label>
+        <input type="file" asp-for="Dish.ImageFile" name="imageFile" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>

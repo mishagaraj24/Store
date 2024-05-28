@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Store.Models.Category>
+
+@{
+    ViewData["Title"] = "Search";
+}
+
+<h2>Categories</h2>
+
+@{
+    var isAdmin = User.IsInRole("admin");
+}
+@if (isAdmin)
+{
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Create New</a>
+    </p>
+}
+
+<div class="row">
+    @if (Model != null && Model.Any())
+    {
+        foreach (var category in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="@category.ImagePath" class="card-img-top" alt="@category.Name" style="max-width: 100%; height: auto;" />
+                    <div class="card-body">
+                        <h5 class="card-title"><a asp-action="Details" asp-route-id="@category.Id">@category.Name</a></h5>
+                       
+                        @if (isAdmin)
+                        {
+                            <div class="btn-group" role="group">
+                                <a class="btn btn-primary" asp-action="Edit" asp-route-id="@category.Id">Edit</a>
+                                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@category.Id">Delete</a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <p>No categories found.</p>
+    }
+</div>
